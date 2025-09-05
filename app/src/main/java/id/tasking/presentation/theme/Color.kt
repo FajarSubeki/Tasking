@@ -1,4 +1,4 @@
-package id.tasking.ui.theme
+package id.tasking.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
