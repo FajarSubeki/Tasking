@@ -1,6 +1,5 @@
 package id.tasking.presentation.task.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,21 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
-    private val useCases: TaskUseCases,
-    private val savedStateHandle: SavedStateHandle
+    private val useCases: TaskUseCases
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<TaskState>(TaskState.Loading)
     val state: StateFlow<TaskState> = _state.asStateFlow()
-
-    // Persist input field menggunakan SavedStateHandle
-    private var inputTitle: String
-        get() = savedStateHandle["title"] ?: ""
-        set(value) { savedStateHandle["title"] = value }
-
-    private var inputDescription: String
-        get() = savedStateHandle["description"] ?: ""
-        set(value) { savedStateHandle["description"] = value }
 
     init {
         fetchTasks()
@@ -47,14 +36,6 @@ class TaskViewModel @Inject constructor(
                 _state.value = TaskState.Error(e.message ?: "Unknown error")
             }
         }
-    }
-
-    fun onTitleChange(title: String) {
-        inputTitle = title
-    }
-
-    fun onDescriptionChange(desc: String) {
-        inputDescription = desc
     }
 
     fun addTask(title: String, description: String) {
@@ -98,10 +79,4 @@ class TaskViewModel @Inject constructor(
         }
     }
 
-    // Optional: fungsi untuk Compose observe input
-    fun getInputState(): TaskState.InputState =
-        TaskState.InputState(
-            newTaskTitle = inputTitle,
-            newTaskDescription = inputDescription
-        )
 }
