@@ -122,11 +122,9 @@ fun TaskScreen(
             description = taskToEdit?.description ?: "",
             onDismiss = { showBottomSheet = false },
             onSave = { title, desc ->
-                if (taskToEdit != null) {
-                    viewModel.editTask(taskToEdit!!, title, desc)
-                } else {
-                    viewModel.addTask(title, desc)
-                }
+                taskToEdit?.let { task ->
+                    viewModel.editTask(task, title, desc)
+                } ?: viewModel.addTask(title, desc)
                 showBottomSheet = false
             }
         )
