@@ -3,9 +3,9 @@ package id.tasking.di
 import android.app.Application
 import androidx.room.Room
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.Provides
 import id.tasking.data.local.TaskDatabase
 import id.tasking.data.repository.TaskRepositoryImpl
 import id.tasking.domain.repository.TaskRepository
